@@ -90,7 +90,7 @@ fn main() {
 
 
     //test xmas_lyrics
-    // lyrics(12);
+    lyrics(12);
 
 }
 
