@@ -1,12 +1,10 @@
 // Convert temperatures between Fahrenheit and Celsius.
-fn temp_converter(deg: f32, to_unit: &mut char) -> Result<f32, &str> {
-    if to_unit.to_ascii_lowercase() == 'f' {
-        Ok(deg * 1.8 + 32.0)
-    } else if to_unit.to_ascii_lowercase() == 'c' {
-        Ok((deg - 32.0) / 1.8)
-    } else {
-        Err("to_unit function arg must be: 'C','c','F','f'")
-    }
+fn temp_converter(deg: f32, to_unit: &mut char) -> Result<f32, String> {
+    match to_unit.to_ascii_lowercase() {
+        'f' => Ok(deg * 1.8 + 32.0),
+        'c' => Ok((deg - 32.0) / 1.8),
+        _ =>  Err("to_unit function arg must be: 'C','c','F','f'".to_string())
+    } 
 }
 
 // Generate the nth Fibonacci number.
@@ -57,40 +55,38 @@ fn lyrics(day: i8) {
 }
 
 
-fn main() {
-    //test temp_converter
+// fn main() -> Result<(), String> {
+fn main() -> Result<(), String> {
+    // test temp_converter
     const F_BOILING: f32 = 212.0;
     const C_BOILING: f32 = 100.0;
     let tests = ['c', 'C', 'f', 'F'];
+    // let tests_w_err = ['A', 'c', 'C', 'f', 'F'];
 
     for mut chr in tests {
         if chr == 'c' || chr == 'C' {
-            match temp_converter(F_BOILING, &mut chr) {
-                Ok(n) => assert_eq!(n, C_BOILING),
-                Err(s) => println!("{s}")
-            };
+            assert_eq!(temp_converter(F_BOILING, &mut chr)?, C_BOILING)
         } else {
-            match temp_converter(C_BOILING, &mut chr) {
-                Ok(n) => assert_eq!(n, F_BOILING),
-                Err(s) => println!("{s}")
-            };
+            assert_eq!(temp_converter(C_BOILING, &mut chr)?, F_BOILING)
         }
     }
+    println!("* temp_converter..........PASSED");
 
 
-    //test nth_fib_num w/for loop.
+    // test nth_fib_num w/for loop.
     let e = [0,1,1,2,3,5].iter().enumerate();
     for item in e {
         assert_eq!(nth_fib_num(item.0), *item.1);
     }
 
 
-    // test nth_fib_num with .for_each()  ............felt like clojure cute, might delete later 😉
+    // test nth_fib_num with .for_each()  ............felt closure cute, might delete later 😉
     [0,1,1,2,3,5].iter().enumerate().for_each(|(i, x)| assert_eq!(nth_fib_num(i), *x));
+    println!("* nth_fib_num..........PASSED");
 
 
-    //test xmas_lyrics
+    // test xmas_lyrics
     lyrics(12);
 
+    Ok(())
 }
-
