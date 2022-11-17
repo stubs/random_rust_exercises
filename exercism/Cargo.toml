@@ -10,3 +10,7 @@ edition = "2021"
 [[bin]]
 name = "enum_sublist"
 path = "src/enum_sublist.rs"
+
+[[bin]]
+name = "enum_allergies"
+path = "src/enum_allergies.rs"
