@@ -18,3 +18,7 @@ path = "src/enum_allergies.rs"
 [[bin]]
 name = "enum_tournament"
 path = "src/enum_tournament.rs"
+
+[[bin]]
+name = "enum_robot"
+path = "src/enum_robot.rs"
